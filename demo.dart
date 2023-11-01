@@ -1,4 +1,4 @@
-main(){
+main() {
   // int str = 134;
   // final a = new DateTime.now();
   // const a = new DateTime.now();
@@ -28,7 +28,6 @@ main(){
   //   print('no');
   // }
   // print(flag);
-
 
   // var l1 = ['1',2,true];
   // print(l1);
@@ -86,7 +85,6 @@ main(){
   // print(a%b); // 取余
   // print(a~/b);// 取整
 
-
   // 类型转换
   // String str = '123';
   // var n = int.parse(str);
@@ -120,7 +118,6 @@ main(){
   // print(l1.removeAt(2)); // 根据下标删除
   // print(l1);
 
-
   // var l2 = ['苹果','香蕉','西瓜'];
   // l2.fillRange(0,1,'梨子'); // 类似js splice
   // print(l2);
@@ -129,7 +126,7 @@ main(){
   // print(l2);
   // l2.insertAll(1, ['梨子1','西瓜1','香蕉1']); // 插入多个
   // print(l2);
-  
+
   // var l3 = ['苹果','香蕉','西瓜'];
   // var str = l3.join(','); // 数组转字符串
   // print(str);
@@ -142,7 +139,7 @@ main(){
   // print(s); // {123}
   // var arr = s.toList();
   // print(arr); // [123]
-  
+
   // var ml = ['苹果','苹果','香蕉','西瓜','香蕉','西瓜'];
   // // var s2 = new Set();
   // // s2.addAll(ml);
@@ -151,7 +148,6 @@ main(){
   // var l2 = s2.toList();
   // print(l2); // [苹果, 香蕉, 西瓜]
   // // 也可以 new Set() 然后通过addAll([xx,xx])来添加元素 然后通过toList()来获取元素 效果一样
-
 
   // var person = {
   //   "name":"张三",
@@ -168,19 +164,19 @@ main(){
   // print(person);
 
   // print(m.containsKey('name')); // true
-  // print(m.containsValue(18)); // true 
+  // print(m.containsValue(18)); // true
 
   // for(var key in m.keys){
   //   print(key);
   //   print(m[key]);
   // }
-  
-  var l2 = [1,2,3];
 
-var list = l2.every((item){
-  return item >2;
-});
-print(list); // false 每一个都要满足条件才能返回true 否则false
+//   var l2 = [1,2,3];
+
+// var list = l2.every((item){
+//   return item >2;
+// });
+// print(list); // false 每一个都要满足条件才能返回true 否则false
 //  var list = l2.map((item){
 //     return item*2;
 //   });

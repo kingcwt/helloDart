@@ -311,5 +311,241 @@ Set
 
 ```
 
+类
+
+```dart
+printInfo(String username, {sex = '男'}) {
+  print(username);
+  print(sex);
+}
+
+// class Person {
+//   String name = 'cwt';
+//   int age = 18;
+
+//   Person() {
+//     print('构造函数');
+//   }
+
+//   void getInfo() {
+//     print('${this.name}---${this.age}');
+//   }
+// }
+
+// class Person2 {
+//   late String name;
+//   late int age;
+//   // 构造函数和 类的名称一样
+//   Person2(String name, int age) {
+//     this.name = name;
+//     this.age = age;
+//   }
+// }
+
+class Person {
+  late String name;
+  late int age;
+  // 构造函数简写
+  // Person(this.name, this.age);
+
+  // 命名构造函数
+  Person.now(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+  Person.setInfo(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  void printInfo() {
+    print('${this.name}, ${this.age}');
+  }
+}
+
+main() {
+  // var p = Person.now('cwt', 18);
+  var p = Person.setInfo('cwt', 18);
+  p.printInfo();
+  // print(p.name);
+  // var p1 = new Person();
+  // print(p1.name);
+  // p1.getInfo();
+
+  // var p2 = new Person2('chr', 27);
+  // print(p2.name);
+  // print(p2.age);
+}
+
+
+class Person {
+  late String name;
+  late int age;
+  // 构造函数简写
+  // Person(this.name, this.age);
+
+  // 命名构造函数
+  Person.now(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+  Person.setInfo(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  void printInfo() {
+    print('${this.name}, ${this.age}');
+  }
+}
+
+main() {
+  // var p = Person.now('cwt', 18);
+  var p = Person.setInfo('cwt', 18);
+  p.printInfo();
+  // print(p.name);
+  // var p1 = new Person();
+  // print(p1.name);
+  // p1.getInfo();
+
+  // var p2 = new Person2('chr', 27);
+  // print(p2.name);
+  // print(p2.age);
+}
+
+
+//lib/animal.dart
+class Animal {
+  late String name;
+  late int age;
+  late String _sex; // _表示私有属性 不能在外部访问
+  late int height;
+  late int width;
+  Animal(this.name, this.age, this._sex);
+  void getInfo() {
+    print('${this.name}---${this.age}--${this._sex}');
+  }
+
+  set(value) {
+    this.height = value;
+    this.width = value;
+  }
+}
+
+
+
+// .. 表示级联 如下面的p.age = 27;p.sex=0; === p..age=27..sex=0;
+
+class StaticLib {
+  late int age;
+  late int sex;
+  StaticLib(this.age, this.sex);
+  static String name = 'chr';
+  static void printName() {
+    print(name);
+  }
+}
+
+
+import './lib/Static.dart';
+
+main() {
+  print(StaticLib.name);
+  StaticLib.printName();
+
+  var p = new StaticLib(18, 25);
+  print(p.age);
+  print(p.sex);
+
+  // p.age = 27;
+  // p.sex = 0;
+  p
+    ..age = 27
+    ..sex = 1;
+
+  print(p.age);
+  print(p.sex);
+}
+```
+
+类继承
+
+```dart
+class Person {
+  String name = 'cwt';
+  int age = 18;
+  void printInfo() {
+    print('${this.name}---${this.age}');
+  }
+}
+
+class Web extends Person {}
+
+main() {
+  Web w = new Web();
+  w.age = 20;
+  w.printInfo();
+}
+
+
+// 构造函数继承
+class Person {
+  String name = 'cwt';
+  int age = 18;
+  Person(this.name, this.age);
+  void printInfo() {
+    print('${this.name}---${this.age}');
+  }
+}
+
+class Web extends Person {
+  // Web(super.name, super.age); // 简写
+  Web(String name, int age) : super(name, age); 
+}
+
+main() {
+  Web w = new Web('chr', 27);
+  // w.age = 20;
+  w.printInfo();
+}
+
+// 覆写父类方法
+class Person {
+  String name = 'cwt';
+  int age = 18;
+  Person(this.name, this.age);
+  void printInfo() {
+    print('父类-printInfo=>${this.name}---${this.age}');
+  }
+}
+
+class Web extends Person {
+  // Web(super.name, super.age);
+  late String sex;
+  Web(String name, int age, String sex) : super(name, age) {
+    this.sex = sex;
+  }
+  run() {
+    print('${this.name}---${this.age}---${this.sex}');
+    super.printInfo();
+  }
+
+  // 复写父类的方法
+  @override
+  void printInfo() {
+    print('子类-printInfo=>${this.name}---${this.age}');
+  }
+}
+
+main() {
+  Web w = new Web('chr', 27, '男');
+  // w.age = 20;
+  w.printInfo();
+  w.run();
+}
+
+
+```
+
 
 
