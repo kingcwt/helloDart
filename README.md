@@ -1,5 +1,21 @@
 # helloDart
 
+
+
+Dart Pub包管理系统中的库
+
+```
+https://pub.dev/packages
+```
+
+Dart 内置库
+
+```
+import 'dart:xx';
+```
+
+
+
 download dart
 
 ```Plain Text
@@ -548,4 +564,424 @@ main() {
 ```
 
 
+
+抽象类
+
+ ```dart
+ /**
+  * 1 定义一个animal类要求它的子类必须包含抽象方法
+  * 2 抽象类没法实例化 只能被继承
+  */
+ 
+ abstract class Animal {
+   eat(); // 抽象方法
+   run(); // 抽象方法
+   printInfo() {
+     print('抽象类里面的普通方法');
+   }
+ }
+ 
+ class Dog extends Animal {
+   @override
+   eat() {
+     print('狗吃肉');
+   }
+ 
+   @override
+   run() {
+     print('狗跑');
+   }
+ }
+ 
+ class Cat extends Animal {
+   @override
+   eat() {
+     print('猫吃鱼');
+   }
+ 
+   @override
+   run() {
+     print('猫跑');
+   }
+ }
+ 
+ main() {
+   Dog d = new Dog();
+   Cat c = new Cat();
+   c.eat();
+   d.eat();
+   c.run();
+   d.run();
+   c.printInfo();
+   d.printInfo();
+ }
+ 
+ ```
+
+多态
+
+```dart
+/**
+ * Dart中的多态：
+ * 在父级类中声明的抽象方法，父类不去实现它，让继承它的子类去实现，每个子类有不同的表现 这就叫多态
+ */
+
+abstract class Animal {
+  void eat();
+  void run();
+}
+
+class Dog extends Animal {
+  @override
+  void eat() {
+    print('狗吃肉');
+  }
+
+  @override
+  void run() {
+    print('狗跑');
+  }
+}
+
+class Cat extends Animal {
+  @override
+  void eat() {
+    print('猫吃鱼');
+  }
+
+  @override
+  void run() {
+    print('猫跑');
+  }
+
+  catjump() {
+    print('猫跳');
+  }
+}
+
+main() {
+  // 这里需要注意：引用的是子类对象 还是父类对象  如果是父类对象，不能调用子类上定义的方法
+  Cat c = new Cat();
+  c.catjump();
+
+  Animal a = new Dog();
+  a.run();
+
+  Animal b = new Cat();
+  b.run();
+  // b.catjump(); // error
+}
+
+```
+
+接口
+
+```dart
+import './lib/Mssql.dart';
+/**
+ * 实现接口
+ */
+
+abstract class DB {
+  late String url;
+  add(String info);
+  update();
+  delete();
+}
+
+// implements 实现接口
+class Mysql implements DB {
+  @override
+  add(String info) {
+    print('mysql add --- ' + info);
+  }
+
+  @override
+  update() {
+    print('mysql update');
+  }
+
+  @override
+  delete() {
+    print('mysql delete');
+  }
+
+  @override
+  late String url;
+
+  Mysql(this.url);
+}
+
+main() {
+  Mysql m = new Mysql('http://www.baidu.com');
+  m.add('what the fuck are you doing ?');
+  m.update();
+  m.delete();
+
+  Mssql s = new Mssql('http://www.baidu.com');
+  s.add('what the fuck are you doing ?');
+  s.update();
+  s.delete();
+}
+
+
+
+/**
+ * Dart 一个类实现多个接口
+ */
+
+abstract class A {
+  printA();
+}
+
+abstract class B {
+  printB();
+}
+
+// 一个类实现多个接口
+class C implements A, B {
+  @override
+  printA() {
+    print('C');
+  }
+
+  @override
+  printB() {
+    print('C');
+  }
+}
+
+```
+
+Mixins
+
+```dart
+/**
+ * mixins 不是继承 也不是接口 而是一种全新的特性
+ * 1 mixin类不能有构造函数
+ * 2 mixin类不能继承其他类
+ * 
+ */
+
+class Person {
+  late String name;
+  late int age;
+  Person(this.name, this.age);
+  printInfo() {
+    print('${this.name}---${this.age}');
+  }
+}
+
+mixin A {
+  void printA() {
+    print('A');
+  }
+}
+
+mixin B {
+  void printB() {
+    print('B');
+  }
+}
+
+class C with A, B {}
+
+class D extends Person with A, B {
+  D(String name, int age) : super(name, age);
+}
+
+main() {
+  C c = new C();
+  c.printA();
+  c.printB();
+
+  D d = new D('cwt', 27);
+  d.age = 28;
+  d.printInfo();
+  d.printA();
+  d.printB();
+}
+
+```
+
+泛型
+
+ ```dart
+ 
+ /**
+  * 泛型
+  * 泛型类
+  */
+ 
+ T getData<T>(T value) {
+   return value;
+ }
+ 
+ class MyList<T> {
+   List list = <T>[];
+   void add(T value) {
+     list.add(value);
+   }
+ 
+   List getList() {
+     return list;
+   }
+ }
+ 
+ main() {
+   // print(getData<String>('123'));
+   // print(getData<int>(222));
+ 
+   MyList l = MyList<int>();
+   l.add(1);
+   l.add(2);
+   MyList l2 = MyList<String>();
+   l2.add('o1');
+   l2.add('o2');
+   print(l.getList());
+   print(l2.getList());
+ }
+ 
+ 
+ /**
+  * 泛型接口
+  */
+ abstract class Cache<T> {
+   getByKey(String key);
+   void setByKey(String key, T value);
+ }
+ 
+ class FileCatche<T> implements Cache<T> {
+   @override
+   getByKey(String key) {}
+ 
+   @override
+   void setByKey(String key, T value) {
+     print('文件：key=$key,value=$value');
+   }
+ }
+ 
+ class MemoryCache<T> implements Cache<T> {
+   @override
+   getByKey(String key) {}
+ 
+   @override
+   void setByKey(String key, T value) {
+     print('内存：key=$key,value=$value');
+   }
+ }
+ 
+ main() {
+   MemoryCache m = new MemoryCache<Map>();
+   m.setByKey('index', {'name': '章三', 'age': 18});
+ }
+ 
+ ```
+
+Request 
+
+```dart
+import 'dart:io';
+import 'dart:convert';
+
+getDatafromxx() async {
+  // https://news-at.zhihu.com/api/3/stories/latest
+
+  // create htppsclient object
+  var httpClient = new HttpClient();
+  // create uri object
+  var uri = new Uri.http('news-at.zhihu.com', '/api/3/stories/latest');
+  // send request
+  var request = await httpClient.getUrl(uri);
+  // close request
+  var response = await request.close();
+  // get response
+  return await response.transform(utf8.decoder).join();
+}
+
+void main() async {
+  var result = await getDatafromxx();
+  print(result);
+}
+
+```
+
+引入第三方库
+
+```dart
+//1 在文件下新建pubspec.yaml文件 增加以下内容 http这个是引入的模块包 
+name: xxx
+description: adadada
+dependencies:
+  http: ^1.1.0
+environment:
+  sdk: '^3.1.0'
+    
+//2 命令行 执行 dart pub get 安装
+    
+// 3 示例代码
+import 'package:http/http.dart' as http;
+
+void main(List<String> arguments) async {
+  // import 'package:http/http.dart' as http;
+
+  var url = Uri.https('news-at.zhihu.com', '/api/3/stories/latest');
+  var response = await http.get(url);
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+
+  print(await http.read(Uri.https('example.com', 'foobar.txt')));
+}
+
+```
+
+导入
+
+  ```dart
+  import 'package:http/http.dart' as http; // 重命名
+  import 'package:http/http.dart' show http; // 部分导入
+  import 'package:http/http.dart' hide http; // 部分导入
+  ```
+
+3.x 新特性
+
+ ```dart
+ /**
+  * Null safety
+  */
+ 
+ String printInfo(String name, {required int age, required String sex}) {
+   // if (age != 0) {
+   //   print('${name}---${age}---${sex}');
+   //   return '';
+   // }
+   return '${name}---${age}---${sex}';
+ }
+ 
+ main() {
+   // Null safety   加？表示可空类型
+   // ！ 类型断言
+   // late  延迟初始化
+   // required 必填 表示必须传入的参数
+   String? str = '123';
+ 
+   str = null;
+ 
+   print(str);
+   printInfo('cwt', age: 10, sex: '男');
+ }
+ 
+ 
+ /**
+  * identical 是否公用一个存储空间
+  */
+ 
+ main() {
+   var a = new Object();
+   var b = new Object();
+ 
+   print(identical(a, b));
+ }
+ 
+ ```
 
